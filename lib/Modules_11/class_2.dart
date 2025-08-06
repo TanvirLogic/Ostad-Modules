@@ -1,58 +1,54 @@
 import 'package:flutter/material.dart';
 
-import 'Widgets/my_calc_button.dart';
+import 'Widgets/build_button.dart';
 
-class Class2 extends StatefulWidget {
-  const Class2({super.key});
+class CalculatorApp extends StatefulWidget {
+  const CalculatorApp({super.key});
 
   @override
-  State<Class2> createState() => _Class2State();
+  State<CalculatorApp> createState() => _CalculatorAppState();
 }
 
-class _Class2State extends State<Class2> {
+class _CalculatorAppState extends State<CalculatorApp> {
   String _output = '0';
   String _input = '0';
-  String _operator = '0';
+  String _ope = '0';
   double num1 = 0;
   double num2 = 0;
 
   void buttonPress(String value) {
-    // print('int value=$value');
+    print('int value = $value');
     setState(() {
       if (value == 'C') {
-        String _output = '0';
-        String _input = '0';
-        String _operator = '0';
-        double num1 = 0;
-        double num2 = 0;
+        _output = '0';
+        _input = '0';
+        _ope = '';
+        num1 = 0;
+        num2 = 0;
       } else if (value == '=') {
-        num2 = double.parse(_input); // Question
-        // 47 min
-        if (_operator == '+') {
+        num2 = double.parse(_input);
+        if (_ope == '+') {
           _output = (num1 + num2).toString();
-        } else if (_operator == '-') {
+        } else if (_ope == '-') {
           _output = (num1 - num2).toString();
-        } else if (_operator == '*') {
+        } else if (_ope == '*') {
           _output = (num1 * num2).toString();
-        } else if (_operator == '÷') {
-          _output = num2 != 0 ? (num1 / num2).toString() : "Error";
+        } else if (_ope == '÷') {
+          _output = num2 != 0
+              ? (num1 / num2).toString()
+              : 'Cannot divide by zero';
         }
-      }
-      else if(['+','-','*','÷'].contains(value)){
-
+      } else if (['+', '-', '*', '÷'].contains(value)) {
         num1 = double.parse(_input);
-        _operator = value;
+        _ope = value;
         _input = '';
-        
-      }
-      else{
-        if(_input==0){
-          _input=value;
+      } else {
+        if (_input == '0') {
+          _input = value;
+        } else {
+          _input += value;
         }
-        else{
-          _input+=value;
-        }
-        _output=_input;
+        _output = _input;
       }
     });
   }
@@ -65,72 +61,72 @@ class _Class2State extends State<Class2> {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(30),
               alignment: Alignment.bottomRight,
-              child: Text(
-                _output,
-                style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+              padding: EdgeInsets.all(30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  (_ope.isNotEmpty && _input.isNotEmpty)
+                      ? Text(
+                          '$num1 $_ope $_input',
+                          style: TextStyle(fontSize: 24, color: Colors.white54),
+                        )
+                      : SizedBox(),
+                  SizedBox(height: 20),
+                  Text(
+                    _output,
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           Row(
-            spacing: 10,
             children: [
-              MyCalcButton(
-                onClick: () {
-                  return buttonPress('7');
-                },
-                text: '7',
-              ),
-              MyCalcButton(onClick: () => buttonPress('8'), text: '8'),
-              MyCalcButton(onClick: () => buttonPress('9'), text: '9'),
-              MyCalcButton(
+              buildButton(onClick: () => buttonPress('7'), text: '7'),
+              buildButton(onClick: () => buttonPress('8'), text: '8'),
+              buildButton(onClick: () => buttonPress('9'), text: '9'),
+              buildButton(
                 onClick: () => buttonPress('÷'),
-                color: Colors.orange,
                 text: '÷',
+                color: Colors.orange,
               ),
             ],
           ),
-          SizedBox(height: 20),
           Row(
-            spacing: 10,
             children: [
-              MyCalcButton(onClick: () => buttonPress('4'), text: '4'),
-              MyCalcButton(onClick: () => buttonPress('5'), text: '5'),
-              MyCalcButton(onClick: () => buttonPress('6'), text: '6'),
-              MyCalcButton(
+              buildButton(onClick: () => buttonPress('4'), text: '4'),
+              buildButton(onClick: () => buttonPress('5'), text: '5'),
+              buildButton(onClick: () => buttonPress('6'), text: '6'),
+              buildButton(
                 onClick: () => buttonPress('*'),
                 text: '*',
                 color: Colors.orange,
               ),
             ],
-          ), // Second Row
-          SizedBox(height: 20),
+          ),
           Row(
-            spacing: 10,
             children: [
-              MyCalcButton(onClick: () => buttonPress('1'), text: '1'),
-              MyCalcButton(onClick: () => buttonPress('2'), text: '2'),
-              MyCalcButton(onClick: () => buttonPress('3'), text: '3'),
-              MyCalcButton(
+              buildButton(onClick: () => buttonPress('1'), text: '1'),
+              buildButton(onClick: () => buttonPress('2'), text: '2'),
+              buildButton(onClick: () => buttonPress('3'), text: '3'),
+              buildButton(
                 onClick: () => buttonPress('-'),
                 text: '-',
                 color: Colors.orange,
               ),
             ],
-          ), // Third Row
-          SizedBox(height: 20),
+          ),
           Row(
-            spacing: 10,
             children: [
-              MyCalcButton(onClick: () => buttonPress('C'), text: 'C'),
-              MyCalcButton(onClick: () => buttonPress('0'), text: '0'),
-              MyCalcButton(onClick: () => buttonPress('='), text: '='),
-              MyCalcButton(
+              buildButton(onClick: () => buttonPress('C'), text: 'C'),
+              buildButton(onClick: () => buttonPress('0'), text: '0'),
+              buildButton(onClick: () => buttonPress('='), text: '='),
+              buildButton(
                 onClick: () => buttonPress('+'),
                 text: '+',
                 color: Colors.orange,
