@@ -26,8 +26,33 @@ class _Class2State extends State<Class2> {
         double num1 = 0;
         double num2 = 0;
       } else if (value == '=') {
-        num2=double.parse(_input);
+        num2 = double.parse(_input); // Question
         // 47 min
+        if (_operator == '+') {
+          _output = (num1 + num2).toString();
+        } else if (_operator == '-') {
+          _output = (num1 - num2).toString();
+        } else if (_operator == '*') {
+          _output = (num1 * num2).toString();
+        } else if (_operator == '÷') {
+          _output = num2 != 0 ? (num1 / num2).toString() : "Error";
+        }
+      }
+      else if(['+','-','*','÷'].contains(value)){
+
+        num1 = double.parse(_input);
+        _operator = value;
+        _input = '';
+        
+      }
+      else{
+        if(_input==0){
+          _input=value;
+        }
+        else{
+          _input+=value;
+        }
+        _output=_input;
       }
     });
   }

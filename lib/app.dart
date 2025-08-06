@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Modules_11/class_2.dart';
+import 'Modules_11/gpt_calc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
