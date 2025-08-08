@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'Modules_11/gpt_calc.dart';
+import 'package:ostad_modules/Modules_11/class_3/water_tracker.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home:Class2() ,);
+    return MaterialApp(home: WaterTracker());
   }
 }
