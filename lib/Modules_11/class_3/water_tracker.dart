@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'Widget/add_water_button.dart';
@@ -12,25 +14,35 @@ class WaterTracker extends StatefulWidget {
 class _WaterTrackerState extends State<WaterTracker> {
   int currentInTake = 0;
   final int goal = 5000;
+  Timer? _time;
 
-  void waterAdd(int amount){
-
-    setState(() {
-      currentInTake=(currentInTake+amount).clamp(0, goal);
+  @override
+  void initState() {
+    super.initState();
+    _time = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (currentInTake > 0) {
+        setState(() {
+          currentInTake = (currentInTake - 1).clamp(0, goal);
+        });
+      }
     });
-
   }
 
-  void reset(){
+  void waterAdd(int amount) {
     setState(() {
-      currentInTake=0;
+      currentInTake = (currentInTake + amount).clamp(0, goal);
     });
   }
 
+  void reset() {
+    setState(() {
+      currentInTake = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    double progress = (currentInTake/goal).clamp(0, 1);
+    double progress = (currentInTake / goal).clamp(0, 1);
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
@@ -86,7 +98,7 @@ class _WaterTrackerState extends State<WaterTracker> {
                   ),
                 ),
                 Text(
-                  '${(progress*100).toInt()}%',
+                  '${(progress * 100).toInt()}%',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -115,9 +127,6 @@ class _WaterTrackerState extends State<WaterTracker> {
                   onClick: () => reset(),
                   amount: 0,
                 ),
-
-
-
               ],
             ),
           ],
