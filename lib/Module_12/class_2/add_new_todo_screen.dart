@@ -28,9 +28,11 @@ class _AddNewTodoScreenState extends State<AddNewTodoScreen> {
             children: [
               TextFormField(
                 controller: titleController,
-                decoration: InputDecoration(hintText: titleController.text),
+                decoration: const InputDecoration(
+                  hintText: 'Enter title', // better to give a static hint
+                ),
                 validator: (String? value) {
-                  if (value?.trim().isEmpty ?? true) {
+                  if (value == null || value.trim().isEmpty) {
                     return 'Enter a valid title';
                   }
                   return null;
@@ -38,9 +40,9 @@ class _AddNewTodoScreenState extends State<AddNewTodoScreen> {
               ),
               TextFormField(
                 controller: descripController,
-                decoration: InputDecoration(hintText: descripController.text),
+                decoration: InputDecoration(hintText: 'Enter Description'),
                 validator: (String? value) { // Question
-                  if (value?.trim().isEmpty ?? true) {
+                  if (value == null || value.trim().isEmpty) {
                     return 'Enter a valid description';
                   }
                   return null;
@@ -53,7 +55,7 @@ class _AddNewTodoScreenState extends State<AddNewTodoScreen> {
                     return;
                   } //Question
                   Todo object = Todo(
-                    title: titleController.text.trim(), // Free space cutw
+                    title: titleController.text.trim(), // Free space cut
                     description: descripController.text,
                     status: 'Pending',
                     createdDate: DateTime.now(),
